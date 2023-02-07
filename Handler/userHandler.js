@@ -5,8 +5,8 @@ const userSchema = require('../Schemas/userSchema')
 const jwt = require('jsonwebtoken')
 
 
-// ==model==
-const User = new mongoose.model('user', userSchema)
+// ==model==p
+const User = new mongoose.model('User', userSchema)
 
 
 
@@ -65,5 +65,23 @@ router.post('/login', async (req, res) => {
     
   }
 })
+
+
+
+// ===get User all data===
+router.get("/all", async (req, res) =>{
+  try{
+     const users = await User.find({
+      status : "active"
+     }).populate("todos")
+     res.status(200).send(users)
+  }catch(err){
+    res.status(400).send({ message: 'data not found'})
+
+  }
+})
+
+
+
 
 module.exports = router

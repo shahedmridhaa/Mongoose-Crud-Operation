@@ -8,9 +8,10 @@ const checkLogin = (req, res, next) => {
       const {username, userId} = decoded
       req.username = username;
       req.userId = userId
+      
       next()
     }catch{
-        next("Authentication Failure")
+        next("Authentication Failures")
     }
 }
 
