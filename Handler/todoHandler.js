@@ -2,7 +2,7 @@ const express = require("express")
 const mongoose = require('mongoose')
 const router = express.Router()
 const todoSchema = require('../Schemas/todoSchemas')
-
+const checkLogin = require("../middleware/checkLogin")
 
 
 // ==model==
@@ -12,7 +12,8 @@ const Todo = new mongoose.model('Todo', todoSchema)
  
 
 // Get all Todos
-router.get("/", async (req, res)=>{
+router.get("/", checkLogin, async (req, res)=>{
+  console.log(req.username, req.userId);
     try{
      const todoData = await Todo.find()
      if(todoData){ 
@@ -38,7 +39,7 @@ router.get('/active', async (req, res) =>{
 
 // Get a Todos
 router.get("/:id", async (req, res)=>{
-    
+     
 })
 
 
@@ -55,10 +56,12 @@ router.post("/", async (req, res)=>{
 })
 
 
+
 // Post Multiple Todos
 router.post("/all", async (req, res)=>{
     
 })
+
 
  
 // Put Todos
